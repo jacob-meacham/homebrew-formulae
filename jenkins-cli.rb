@@ -14,7 +14,7 @@ class JenkinsCli < Formula
     libexec.install Dir["**/jenkins-cli.jar"]
     bin.write_jar_script libexec/"jenkins-cli.jar", "jenkins-cli"
 
-    if not ENV['JENKINS_URL'].is_set?
+    if not ENV['JENKINS_URL']?
       ohai 'JENKINS_URL environment variable is not set. Consider setting it to your most commonly used Jenkins instance.'
     end
   end
