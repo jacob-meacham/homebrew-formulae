@@ -17,6 +17,7 @@ class JenkinsCli < Formula
     if not ENV['JENKINS_URL'].is_set?
       ohai 'JENKINS_URL environment variable is not set. Consider setting it to your most commonly used Jenkins instance.'
     end
+  end
 
   test do
     system "jenkins-cli", "--help"
