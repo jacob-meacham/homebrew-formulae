@@ -23,13 +23,15 @@ class JenkinsCli < Formula
     system "jar", "xvf", "jenkins.war"
 
     libexec.install Dir["**/jenkins-cli.jar"]
-    write_jar_script libexec/"jenkins-cli.jar", "jenkins-cli", "", build.ssh_keyfile?
+    write_jar_script libexec/"jenkins-cli.jar", "jenkins-cli", "", build.with? "ssh-keyfile"
 
     if not ENV['JENKINS_URL']
       ohai 'JENKINS_URL environment variable is not set. Consider setting it to your most commonly used Jenkins instance.'
     end
 
-    ohai 'Set '
+    if build.with? "ssh-keyfile"
+      ohai 'Set your SSH key at JENKINS_SSH_KEYFILE'
+    end
   end
 
   test do
