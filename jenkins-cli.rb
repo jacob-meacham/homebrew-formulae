@@ -8,6 +8,15 @@ class JenkinsCli < Formula
 
   depends_on :java => "1.7+"
 
+  # modified from http://www.rubydoc.info/github/Homebrew/homebrew/Pathname:write_jar_script
+  def write_jar_script(target_jar, script_name, java_opts = "", use_jenkins_key = false)
+    mkpath
+    (self+script_name).write <<-EOS.undent
+      #!/bin/bash
+      exec java #{java_opts} -jar #{target_jar} #{use_jenkins_key ? '-i ~/.ssh/jenkins_rsa' : ''} "$@"
+    EOS
+  end
+
   def install
     system "jar", "xvf", "jenkins.war"
 
