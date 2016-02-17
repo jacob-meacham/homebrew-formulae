@@ -11,9 +11,9 @@ class JenkinsCli < Formula
   option "with-ssh-keyfile", "If specified, the run script will by default look for ssh keys at JENKINS_SSH_KEYFILE."
 
   # modified from http://www.rubydoc.info/github/Homebrew/homebrew/Pathname:write_jar_script
-  def write_jar_script(target_jar, script_name, java_opts = "", ssh_keyfile = false)
-    mkpath
-    (self+script_name).write <<-EOS.undent
+  def write_jar_script(pathname, target_jar, script_name, java_opts = "", ssh_keyfile = false)
+    pathname.mkpath
+    (pathname+script_name).write <<-EOS.undent
       #!/bin/bash
       exec java #{java_opts} -jar #{target_jar} #{ssh_keyfile ? '-i ${JENKINS_SSH_KEYFILE}' : ''} "$@"
     EOS
@@ -23,7 +23,7 @@ class JenkinsCli < Formula
     system "jar", "xvf", "jenkins.war"
 
     libexec.install Dir["**/jenkins-cli.jar"]
-    write_jar_script(libexec/"jenkins-cli.jar", "jenkins-cli", "", build.with?("ssh-keyfile"))
+    write_jar_script bin, libexec/"jenkins-cli.jar", "jenkins-cli", "", build.with?("ssh-keyfile")
 
     if not ENV['JENKINS_URL']
       ohai 'JENKINS_URL environment variable is not set. Consider setting it to your most commonly used Jenkins instance.'
