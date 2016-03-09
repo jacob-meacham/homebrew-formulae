@@ -40,7 +40,10 @@ class LibAwsSdk < Formula
       system "make", "install"
     end
 
-    mv lib/"mac/Release", lib
+    mv Dir[lib/"mac/Release/*"].select { |f|
+      print f
+      File.file? f
+    }, lib
   end
 
   test do
