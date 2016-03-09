@@ -40,10 +40,20 @@ class LibAwsSdk < Formula
       system "make", "install"
     end
 
-    mv lib/"mac/Release", lib/"aws"
+    mv lib/"mac/Release", lib
   end
 
   test do
-    raise
+    (testpath/"test.cpp").write <<-EOS.undent
+      #include <aws/core/Version.h>
+      #include <iostream>
+
+      int main() {
+          std::cout << Aws::Version::GetVersionString() << std::endl;
+          return 0;
+      }
+    EOS
+    system ENV.cxx, "test.cpp", "-o", "test", "-laws-cpp-sdk-core"
+    system "./test"
   end
 end
