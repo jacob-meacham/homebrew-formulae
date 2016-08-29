@@ -16,7 +16,7 @@ class ChainCli < Formula
   def install
     venv = virtualenv_create(libexec, "python3")
     venv.pip_install resources
-    venv.link_scripts(bin) { venv.pip_install buildpath }
+    venv.pip_install_and_link buildpath
 
     bash_completion.install "contrib/bash/chain-complete.bash" => "chain"
   end
