@@ -1,7 +1,7 @@
 class ChainCli < Formula
   desc "Command line tools for interacting with chain"
   homepage "https://github.com/jacob-meacham/chain-cli"
-  url "git@github.com:jacob-meacham/chain-cli.git", :using => :git, :tag => "0.3.0"
+  url "git@github.com:jacob-meacham/chain-cli.git", :using => :git, :tag => "0.3.1"
   head "git@github.com:jacob-meacham/chain-cli.git", :using => :git, :branch => "develop"
 
   depends_on :python3
